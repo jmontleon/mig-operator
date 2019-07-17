@@ -288,9 +288,16 @@ rules:
   - delete
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+{% if dedicated_admin_mode == false %}
 kind: ClusterRoleBinding
+{% else %}
+kind: RoleBinding
+{% endif %}
 metadata:
   name: manager-rolebinding
+  {% if dedicated_admin_mode == true %}
+  namespace: {{ mig_namespace }}
+  {% else %}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

@@ -16,3 +16,4 @@ mig_controller_limits_cpu: "100m"
 mig_controller_requests_memory: "250Mi"
 mig_controller_requests_cpu: "100m"
 mig_svc_account: true
+dedicated_admin_mode: false

@@ -162,6 +162,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: {{ mig_namespace }}
+{% if dedicated_admin_mode == false %}
 ---
 allowHostDirVolumePlugin: true
 allowHostIPC: true
@@ -204,6 +205,7 @@ users:
 - system:serviceaccount:{{ mig_namespace }}:velero
 volumes:
 - '*'
+{% endif %}
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -212,6 +214,7 @@ metadata:
   namespace: {{ mig_namespace }}
   labels:
     component: velero
+{% if dedicated_admin_mode == false %}
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -227,6 +230,7 @@ roleRef:
   kind: ClusterRole
   name: cluster-admin
   apiGroup: rbac.authorization.k8s.io
+{% endif %}
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
@@ -286,6 +290,7 @@ spec:
           volumeMounts:
           - mountPath: /target
             name: plugins
+{% if dedicated_admin_mode == false %}
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -344,4 +349,71 @@ spec:
               value: /credentials/cloud
             - name: VELERO_SCRATCH_DIR
               value: /scratch
-
+{% endif %}
+{% if dedicated_admin_mode == true %}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: velero-dedicated
+rules:
+- apiGroups:
+  - velero.io
+  resources:
+  - backups
+  - backupstoragelocations
+  - deletebackuprequests
+  - downloadrequests
+  - podvolumebackups
+  - podvolumerestores
+  - resticrepositories
+  - restores
+  - schedules
+  - serverstatusrequests
+  - volumesnapshotlocations
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: {{ mig_namespace }}
+  name: velero-dedicated-admins-project-0
+subjects:
+- kind: ServiceAccount
+  name: velero
+roleRef:
+  kind: ClusterRole
+  name: dedicated-admins-project
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: {{ mig_namespace }}
+  name: velero-dedicated-admins-project-1
+subjects:
+- kind: ServiceAccount
+  name: velero
+roleRef:
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: {{ mig_namespace }}
+  name: velero-dedicated-admins-project-2
+subjects:
+- kind: ServiceAccount
+  name: velero
+roleRef:
+  kind: ClusterRole
+  name: velero-dedicated
+{% endif %}

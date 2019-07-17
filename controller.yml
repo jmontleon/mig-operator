@@ -5,6 +5,7 @@ metadata:
   namespace: mig
 spec:
   cluster_name: host
+  dedicated_admin_mode: false
   migration_velero: true
   migration_controller: true
   migration_ui: true
