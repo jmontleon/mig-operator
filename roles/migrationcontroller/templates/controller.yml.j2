@@ -295,9 +295,9 @@ kind: RoleBinding
 {% endif %}
 metadata:
   name: manager-rolebinding
-  {% if dedicated_admin_mode == true %}
+{% if dedicated_admin_mode == true %}
   namespace: {{ mig_namespace }}
-  {% else %}
+{% endif %}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
