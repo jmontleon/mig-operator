@@ -5,4 +5,4 @@ metadata:
   namespace: openshift-marketplace
 spec:
   sourceType: grpc
-  image: quay.io/konveyor/mig-operator-index:latest
+  image: quay.io/jmontleon/mig-operator-index:dedicated

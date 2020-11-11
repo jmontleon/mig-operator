@@ -36,6 +36,18 @@ metadata:
             }
         },
         {
+            "apiVersion": "migration.openshift.io/v1alpha1",
+            "kind": "MigrationTenant",
+            "metadata": {
+              "name": "tenant-foo",
+              "namespace": "openshift-migration"
+            },
+            "spec": {
+              "namespace": "foo",
+              "olm_managed": true
+            }
+        },
+        {
             "apiVersion": "velero.io/v1",
             "kind": "Backup",
             "metadata": {
@@ -789,7 +801,7 @@ spec:
               serviceAccount: migration-operator
               containers:
               - name: operator
-                image: quay.io/konveyor/mig-operator-container:latest
+                image: quay.io/jmontleon/mig-operator-container:dedicated
                 imagePullPolicy: Always
                 volumeMounts:
                 - mountPath: /tmp/ansible-operator/runner
@@ -946,6 +958,11 @@ spec:
         version: route.openshift.io/v1
       - kind: Daemonset
         version: apps/v1
+    - name: migrationtenants.migration.openshift.io
+      version: v1alpha1
+      kind: MigrationTenant
+      displayName: MigrationTenant
+      description: A migration tenant deployment
     - name: mighooks.migration.openshift.io
       version: v1alpha1
       kind: MigHook
