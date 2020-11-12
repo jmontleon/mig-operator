@@ -6,8 +6,8 @@ apiVersion: apps/v1
 {% endif %}
 kind: Deployment
 metadata:
-  namespace: {{ namespace }}
-  name: velero
+  namespace: {{ mig_namespace }}
+  name: velero-{{ namespace }}
 spec:
   selector:
     matchLabels:
@@ -52,11 +52,11 @@ spec:
             - debug
 {% endif %}
           volumeMounts:
-            - name: {{ velero_aws_secret_name }}
+            - name: {{ velero_aws_secret_name }}-{{ namespace }}
               mountPath: /credentials
-            - name: {{ velero_gcp_secret_name }}
+            - name: {{ velero_gcp_secret_name }}-{{ namespace }}
               mountPath: /credentials-gcp
-            - name: {{ velero_azure_secret_name }}
+            - name: {{ velero_azure_secret_name }}-{{ namespace }}
               mountPath: /credentials-azure
             - name: plugins
               mountPath: /plugins
@@ -88,15 +88,15 @@ spec:
               value: {{ no_proxy }}
 {% endif %}
       volumes:
-        - name: {{ velero_aws_secret_name }}
+        - name: {{ velero_aws_secret_name }}-{{ namespace }}
           secret:
-            secretName: {{ velero_aws_secret_name }}
-        - name: {{ velero_gcp_secret_name }}
+            secretName: {{ velero_aws_secret_name }}-{{ namespace }}
+        - name: {{ velero_gcp_secret_name }}-{{ namespace }}
           secret:
-            secretName: {{ velero_gcp_secret_name }}
-        - name: {{ velero_azure_secret_name }}
+            secretName: {{ velero_gcp_secret_name }}-{{ namespace }}
+        - name: {{ velero_azure_secret_name }}-{{ namespace }}
           secret:
-            secretName: {{ velero_azure_secret_name }}
+            secretName: {{ velero_azure_secret_name }}-{{ namespace }}
         - name: plugins
           emptyDir: {}
         - name: scratch
@@ -156,4 +156,4 @@ spec:
           - mountPath: /certs
             name: certs
           - mountPath: /credentials
-            name: cloud-credentials
+            name: {{ velero_aws_secret_name }}-{{ namespace }}

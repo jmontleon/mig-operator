@@ -2,8 +2,8 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: velero
-  namespace: {{ namespace }}
+  name: velero-{{ namespace }}
+  namespace: {{ mig_namespace }}
   labels:
     component: velero
 ---
@@ -58,8 +58,8 @@ metadata:
     component: velero
 subjects:
   - kind: ServiceAccount
-    namespace: {{ namespace }}
-    name: velero
+    namespace: {{ mig_namespace }}
+    name: velero-{{ namespace }}
 roleRef:
   kind: ClusterRole
   name: migration-velero
