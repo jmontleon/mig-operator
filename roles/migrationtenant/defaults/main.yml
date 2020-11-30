@@ -19,6 +19,29 @@ excluded_resources:
   - serviceplans
   - operatorgroups
   - events
+  - backups.velero.io
+  - backupstoragelocations.velero.io
+  - deletebackuprequests.velero.io
+  - directimagemigrations.migration.openshift.io
+  - directimagestreammigrations.migration.openshift.io
+  - directvolumemigrationprogresses.migration.openshift.io
+  - directvolumemigrations.migration.openshift.io
+  - downloadrequests.velero.io
+  - miganalytics.migration.openshift.io
+  - migclusters.migration.openshift.io
+  - mighooks.migration.openshift.io
+  - migmigrations.migration.openshift.io
+  - migplans.migration.openshift.io
+  - migrationcontrollers.migration.openshift.io
+  - migrationtenants.migration.openshift.io
+  - migstorages.migration.openshift.io
+  - podvolumebackups.velero.io
+  - podvolumerestores.velero.io
+  - resticrepositories.velero.io
+  - restores.velero.io
+  - schedules.velero.io
+  - serverstatusrequests.velero.io
+  - volumesnapshotlocations.velero.io
 proxy_secret_name: "migration-proxy"
 http_proxy: "{{ lookup( 'env', 'HTTP_PROXY') }}"
 https_proxy: "{{ lookup( 'env', 'HTTPS_PROXY') }}"

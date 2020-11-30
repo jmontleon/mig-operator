@@ -832,7 +832,7 @@ spec:
                 - name: MIG_CONTROLLER_REPO
                   value: mig-controller
                 - name: MIG_CONTROLLER_TAG
-                  value: latest
+                  value: dedicated
                 - name: MIG_UI_REPO
                   value: mig-ui
                 - name: MIG_UI_TAG

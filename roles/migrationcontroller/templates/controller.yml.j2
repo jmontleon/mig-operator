@@ -119,6 +119,8 @@ spec:
           value: webhook-server-secret
         - name: MIGRATION_REGISTRY_IMAGE
           value: {{ migration_registry_image_fqin }}
+        - name: WATCH_NAMESPACE
+          value: {{ mig_namespace }}
 {% if http_proxy|length >0 %}
         - name: HTTP_PROXY
           value: {{ http_proxy }}
@@ -163,6 +165,8 @@ spec:
           value: discovery
         - name: SECRET_NAME
           value: webhook-server-secret
+        - name: WATCH_NAMESPACE
+          value: {{ mig_namespace }}
 {% if http_proxy|length >0 %}
         - name: HTTP_PROXY
           value: {{ http_proxy }}

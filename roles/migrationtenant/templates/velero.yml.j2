@@ -12,11 +12,13 @@ spec:
   selector:
     matchLabels:
       component: velero
+      namespace: {{ namespace }}
   replicas: 1
   template:
     metadata:
       labels:
         component: velero
+        namespace: {{ namespace }}
       annotations:
 {% if lookup('k8s', cluster_info='version').kubernetes.minor|replace('+', '')|int < 9 %}
         pod.alpha.kubernetes.io/init-containers: >-
