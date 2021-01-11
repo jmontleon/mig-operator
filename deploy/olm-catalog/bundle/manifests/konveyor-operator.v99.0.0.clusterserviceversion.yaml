@@ -848,7 +848,7 @@ spec:
                 - name: VELERO_REPO
                   value: velero
                 - name: VELERO_TAG
-                  value: latest
+                  value: dedicated
                 - name: VELERO_PLUGIN_REPO
                   value: openshift-velero-plugin
                 - name: VELERO_PLUGIN_TAG
