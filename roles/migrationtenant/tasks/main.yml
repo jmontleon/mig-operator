@@ -19,8 +19,14 @@
     state: present
     definition: "{{ lookup('template', 'mig_rbac.yml.j2') }}"
 
+- set_fact:
+    controller_state: present
+  when:
+  - migration_controller is defined
+  - migration_controller
+
 - k8s:
-    state: "present"
+    state: "{{ controller_state }}"
     definition: "{{ lookup('template', 'controller.yml.j2') }}"
 
 - name: "Set up discovery service and route"
