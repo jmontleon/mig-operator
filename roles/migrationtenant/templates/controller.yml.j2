@@ -81,7 +81,7 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         - name: ROLE
-          value: cam
+          value: mtc
         - name: SECRET_NAME
           value: webhook-server-secret
         - name: MIGRATION_REGISTRY_IMAGE
@@ -105,7 +105,7 @@ spec:
             name: migration-controller-{{ namespace }}
         image: {{ mig_controller_image_fqin }}
         imagePullPolicy: "{{ image_pull_policy }}"
-        name: cam
+        name: mtc
         ports:
         - containerPort: 9876
           name: webhook-server
