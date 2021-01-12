@@ -19,6 +19,16 @@
     state: present
     definition: "{{ lookup('template', 'mig_rbac.yml.j2') }}"
 
+- name: Create mig-cluster-config configmap
+  k8s:
+    state: "present"
+    definition: "{{ lookup('template', 'mig-cluster-config.yml.j2') }}"
+
+- name: Create non-admin rbac
+  k8s:
+    state: "present"
+    definition: "{{ lookup('template', 'mig-non-admin-rbac.yml.j2') }}"
+
 - set_fact:
     controller_state: present
   when:
